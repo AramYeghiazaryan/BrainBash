@@ -9,6 +9,7 @@ import java.io.IOException;
 public class HerokuMail {
 
 
+    //TODO ASHXATACNEL VAHE JAN
     public void sendEmail(String fromEmail, String toEmail, String subject, String text) throws IOException {
         Email from = new Email(fromEmail);
         Email to = new Email(toEmail);
