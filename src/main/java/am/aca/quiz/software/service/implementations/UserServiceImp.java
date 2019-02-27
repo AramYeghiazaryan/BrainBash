@@ -3,6 +3,7 @@ package am.aca.quiz.software.service.implementations;
 import am.aca.quiz.software.entity.UserEntity;
 import am.aca.quiz.software.entity.enums.Role;
 import am.aca.quiz.software.repository.UserRepository;
+import am.aca.quiz.software.service.HerokuMail;
 import am.aca.quiz.software.service.MailService;
 import am.aca.quiz.software.service.interfaces.UserService;
 import org.springframework.mail.MailException;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -24,15 +26,17 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final MailService mailService;
+    private final HerokuMail herokuMail;
 
     private PasswordEncoder passwordEncoder;
 
     private String activate;
 
 
-    public UserServiceImp(UserRepository userRepository, MailService mailService, PasswordEncoder passwordEncoder) {
+    public UserServiceImp(UserRepository userRepository, MailService mailService, HerokuMail herokuMail, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.mailService = mailService;
+        this.herokuMail = herokuMail;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -56,9 +60,21 @@ public class UserServiceImp implements UserService, UserDetailsService {
     protected void addToDb(UserEntity userEntity, String password, String email) {
         userEntity.setPassword(passwordEncoder.encode(password));
         userEntity.setActivationCode(UUID.randomUUID().toString());
+        String message =
+            "Hello," + userEntity.getName() + "\n" +
+                "Please, visit the following link: https://brainbash.herokuapp.com/user/activate/" +
+                userEntity.getActivationCode();
         try {
 
-            new Thread(() -> mailService.sendActivationCode(email, userEntity)).start();
+          //  new Thread(() -> mailService.sendActivationCode(email, userEntity)).start();
+              new Thread(() -> {
+                  try {
+                      herokuMail.sendEmail("quizsoftware.noreply@gmail.com",email,"Activation",message);
+                  } catch (IOException e) {
+                      e.printStackTrace();
+                  }
+              }).start();
+
 
         } catch (MailException e) {
             throw new RuntimeException("Invalid Mail");
