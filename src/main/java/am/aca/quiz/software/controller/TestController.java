@@ -481,7 +481,7 @@ public class TestController {
         try {
             String text = "Your Test Will Start on " + testUsersDto.getStartTime() + ". And Will Last "
                 + testServiceImp.getById(testUsersDto.getTestId()).getDuration() + " minutes. Good luck.   " +
-                "Please, visit the following link: http://localhost:8080/test/transfer/" + topicId.get(0) + "/" + testUsersDto.getTestId();
+                "Please, visit the following link: https://brainbash.herokuapp.com/test/transfer/" + topicId.get(0) + "/" + testUsersDto.getTestId();
 
             new Thread(() -> {
                 userIds.forEach(

@@ -56,7 +56,7 @@ function createQuestion() {
         dataType: "json",
         success: (function (result) {
             console.log(result);
-            location.href = 'http://localhost:8080/question/add';
+            location.href = 'https://brainbash.herokuapp.com/question/add';
         })
     });
 }

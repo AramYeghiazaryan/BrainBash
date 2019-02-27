@@ -96,7 +96,7 @@ function createTest() {
     $.ajax({
         type: "POST",
         data: random,
-        url: "http://localhost:8080/test/random/generate",
+        url: "https://brainbash.herokuapp.com/test/random/generate",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: (function () {

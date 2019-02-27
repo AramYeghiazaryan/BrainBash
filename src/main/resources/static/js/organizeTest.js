@@ -23,7 +23,7 @@ $().ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: (function () {
-                location.href = "http://localhost:8080/test/organize";
+                location.href = "https://brainbash.herokuapp.com/test/organize";
             })
 
         });
@@ -34,7 +34,7 @@ $().ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: (function (result) {
-                location.href = 'http://localhost:8080/';
+                location.href = 'https://brainbash.herokuapp.com/';
             })
 
         });

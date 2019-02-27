@@ -41,7 +41,7 @@ public class MailService {
         if (!StringUtils.isEmpty(userEntity.getEmail())) {
             String message =
                 "Hello," + userEntity.getName() + "\n" +
-                    "Please, visit the following link: http://localhost:8080/user/activate/" +
+                    "Please, visit the following link: https://brainbash.herokuapp.com/user/activate/" +
                     userEntity.getActivationCode();
             sendText(email, "Activation", message);
         }
